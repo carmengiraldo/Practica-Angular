@@ -1,0 +1,51 @@
+<form #form="ngForm">
+    <h3 *ngIf="data.editMode">Editar persona</h3>
+    <h3 *ngIf="!data.editMode">Agregar persona</h3>
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput required name="nombre" placeholder="Ex. Carmen" [(ngModel)]="data.persona.nombre">
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Apellidos</mat-label>
+        <input required matInput name="apellidos" placeholder="Ex. Giraldo Luna" [(ngModel)]="data.persona.apellidos">
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Edad</mat-label>
+        <input required appEdadValidator matInput name="edad" type="text" maxlength="3" min="0" max="125" pattern="[0-9]{0,3}$" placeholder="Edad" [(ngModel)]="data.persona.edad">
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>DNI</mat-label>
+        <input required matInput name="dni" placeholder="NIF (8 números y 1 letra)" maxlength="9" pattern="^[0-9x-zX-Z][0-9]{7}[A-Za-z]$" [(ngModel)]="data.persona.dni">
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Sexo</mat-label>
+        <mat-select [(value)]="data.persona.sexo" required>
+            <mat-option selected value="Hombre">Hombre</mat-option>
+            <mat-option value="Mujer">Mujer</mat-option>
+            <mat-option value="Otro">Otro</mat-option>
+            <mat-option value="No Especificado">No Especificado</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Color favorito</mat-label>
+        <input required matInput name="color" placeholder="Ex. Verde" [(ngModel)]="data.persona.color">
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Cumpleaños</mat-label>
+        <input required matInput name="fechaNacimiento" placeholder="" [min]="minDate" [max]="maxDate" [(ngModel)]="data.persona.fechaNacimiento" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="buttons">
+        <button *ngIf="!data.editMode" type="button" mat-raised-button color="primary" [mat-dialog-close]="data.persona" [disabled]="form.invalid">Agregar</button>
+        <button *ngIf="data.editMode" type="button" mat-raised-button color="primary" [mat-dialog-close]="data.persona" [disabled]="form.invalid">Guardar</button>
+        <button type="button" mat-raised-button color="secondary" (click)="onCloseClick()">Cancelar</button>
+    </div>
+</form>
